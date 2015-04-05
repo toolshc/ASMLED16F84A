@@ -1,0 +1,23 @@
+list p=16f84
+include <p16f84A.inc>
+
+TIEMPO EQU 0x0C
+
+		ORG 0
+		BSF STATUS,RP0 ; coloque en 1 el bit RP0 -> B 1
+		CLRF PORTB ; salida
+		BCF STATUS,RP0
+
+; zona de codigo
+INICIO	BCF PORTB,0
+		CALL RETARDO
+		BSF PORTB,0
+		GOTO INICIO
+
+RETARDO	MOVLW D'255'
+		MOVFW TIEMPO
+DEC		DECFSZ TIEMPO
+		GOTO DEC
+		RETURN
+
+		END
